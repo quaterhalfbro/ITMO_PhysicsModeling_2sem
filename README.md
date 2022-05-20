@@ -1,2 +1,3 @@
-# PhysicsModeling
-ITMO Physic course labs
+# ITMO Physic course labs
+
+Движение тела, брошенного под углом к горизонту, с учетом сопротивления воздуха. 
