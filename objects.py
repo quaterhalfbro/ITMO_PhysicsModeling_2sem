@@ -1,6 +1,8 @@
-G = 9.8
-INF = 10 ** 20
-FPS = 100
+G = 9.8 # Коэффициент ускорения свободного падения
+INF = 10 ** 20 # Бесконечность
+FPS = 100 # Частота кадров
+CX = 0.4 # Коэффициент обтекания
+PV = 1.2 # Плотность воздуха
 
 
 class Point(object):
@@ -37,16 +39,20 @@ class Vector(Point):
 
 
 class Body(object):
-    def __init__(self, m: float):
+    def __init__(self, m: float, s: float):
         self.m = m
         self.a = Vector(0, 0)
         self.coords = Point(0, 0)
-        self.forces = {"F тяжести": Vector(0, -G * self.m)}
+        self.forces = {"Ft": Vector(0, -G * self.m), "Fa": Vector(0, 0)}
         self.v = Vector(0, 0)
         self.history = {0: self.coords.copy()}
         self.update_a()
         self.flying = True
         self.cur_time = 0
+        self.s = s
+
+    def update_fa(self):
+        self.forces["Fa"] = self.v * (self.v.to(Vector(0, 0))) * CX * PV * self.s * (-1)
 
     def update_a(self):
         total_f = Vector(0, 0)
@@ -63,6 +69,8 @@ class Body(object):
         self.history[self.cur_time] = self.coords.copy()
         if self.coords.y <= 0:
             self.flying = False
+        self.update_fa()
+        self.update_a()
         return self.coords
 
     def is_flying(self):

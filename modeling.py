@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import numpy as np
 from objects import Body
 from matplotlib.animation import FuncAnimation
 
@@ -13,7 +12,7 @@ def frame(time):
 
 if __name__ == "__main__":
     fig, ax = plt.subplots()
-    bodies = [Body(1) for i in range(3)]
+    bodies = [Body(1, 0.1) for i in range(3)]
     bodies[0].push(10, 10)
     bodies[1].push(13.25, 5)
     bodies[2].push(5, 13.25)
